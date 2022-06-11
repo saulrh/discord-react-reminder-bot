@@ -1,3 +1,5 @@
+import idna
+
 import click
 from react_reminder import bot
 from react_reminder import scheduler
