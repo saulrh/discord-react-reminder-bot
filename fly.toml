@@ -1,0 +1,12 @@
+# fly.toml file generated for react-reminder-bot on 2022-06-11T14:30:56-07:00
+
+app = "react-reminder-bot"
+kill_signal = "SIGINT"
+kill_timeout = 5
+
+[build]
+  buildpacks = ["gcr.io/paketo-buildpacks/poetry"]
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
