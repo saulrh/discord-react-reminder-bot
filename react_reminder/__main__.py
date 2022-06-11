@@ -1,5 +1,3 @@
-import idna
-
 import click
 from react_reminder import bot
 from react_reminder import scheduler
@@ -21,7 +19,7 @@ def run(
         redis_dbno:int,
         discord_bot_token: str,
 ):
-    logging.basicConfig(level=logging.DEBUG, encoding='utf-8', style="{", format="{levelname} {filepath} {funcName} {message}")
+    logging.basicConfig(level=logging.DEBUG, encoding='utf-8', style="{", format="{levelname} {pathname} {funcName} {message}")
 
     sched = scheduler.MakeScheduler(
         host=redis_host,
