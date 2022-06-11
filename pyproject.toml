@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "react-reminder"
+version = "0.1.0"
+description = ""
+authors = ["Saul Reynolds-Haertle <saul@saulrh.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+"discord.py" = "^1.7.3"
+absl-py = "^1.1.0"
+python-dateutil = "^2.8.2"
+APScheduler = "^3.9.1"
+
+[tool.poetry.dev-dependencies]
+jurigged = "^0.5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+hot-reload = "jurigged react_reminder/app.py"
+test = "python -m unittest discover -p '*_test.py'"
