@@ -4,8 +4,12 @@ app = "react-reminder-bot"
 kill_signal = "SIGINT"
 kill_timeout = 5
 
+[processes]
+bot = "python -m react_reminder"
+
 [build]
-  buildpacks = ["gcr.io/paketo-buildpacks/poetry"]
+  builder = "paketobuildpacks/builder:base"
+  buildpacks = ["paketo-buildpacks/python"]
 
 [experimental]
   allowed_public_ports = []
