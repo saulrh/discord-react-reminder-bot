@@ -11,4 +11,3 @@ _TOKEN = os.environ.get("REACT_REMINDER_BOT_TOKEN")
 
 class AdminOp(enum.Enum):
     pass
-

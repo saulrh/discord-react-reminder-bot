@@ -14,7 +14,9 @@ def make_job_id(user_id: int, message_id: int, emoji_name: str) -> str:
 
 
 class _ReactReminderClient(discord.Client):
-    def __init__(self, scheduler: apscheduler.schedulers.base.BaseScheduler, *args, **kwargs):
+    def __init__(
+        self, scheduler: apscheduler.schedulers.base.BaseScheduler, *args, **kwargs
+    ):
         super().__init__(*args, **kwargs)
         self._sched = scheduler
 
@@ -23,7 +25,7 @@ class _ReactReminderClient(discord.Client):
 
         if not time:
             return
-        
+
         remind_at = util.next_datetime(
             now=datetime.datetime.now(datetime.timezone.utc),
             then=time,
@@ -36,8 +38,14 @@ class _ReactReminderClient(discord.Client):
         job_id = make_job_id(event.user_id, event.message_id, event.emoji.name)
         self._sched.add_job(
             func=ReminderCallback,
-            trigger='date',
-            args=[event.user_id, event.guild_id, event.channel_id, event.message_id, event.emoji.name],
+            trigger="date",
+            args=[
+                event.user_id,
+                event.guild_id,
+                event.channel_id,
+                event.message_id,
+                event.emoji.name,
+            ],
             id=job_id,
             run_date=remind_at,
         )
@@ -56,20 +64,30 @@ class _ReactReminderClient(discord.Client):
 
 
 CLIENT = None
+
+
 def GetClient(*args, **kwargs) -> _ReactReminderClient:
     global CLIENT
     if not CLIENT:
-        CLIENT = _ReactReminderClient(        intents=discord.Intents(messages=True, reactions=True, guilds=True, members=True),
-                                              *args, **kwargs)
+        CLIENT = _ReactReminderClient(
+            intents=discord.Intents(
+                messages=True, reactions=True, guilds=True, members=True
+            ),
+            *args,
+            **kwargs,
+        )
     return CLIENT
 
 
-
-async def ReminderCallback(user_id: int, guild_id: int, channel_id: int, message_id: int, emoji_name: str):
+async def ReminderCallback(
+    user_id: int, guild_id: int, channel_id: int, message_id: int, emoji_name: str
+):
     logging.info(f"Reminding {user_id} of {message_id}")
     client = GetClient()
     user = client.get_user(user_id)
     logging.info(user)
     if not user:
         return
-    await user.send(content=f"This is a reminder! You asked to be reminded of a message at this time: https://discord.com/channels/{guild_id}/{channel_id}/{message_id}")
+    await user.send(
+        content=f"This is a reminder! You asked to be reminded of a message at this time: https://discord.com/channels/{guild_id}/{channel_id}/{message_id}"
+    )

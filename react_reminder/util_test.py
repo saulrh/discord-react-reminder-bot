@@ -96,4 +96,3 @@ class NextDatetimeTest(unittest.TestCase):
             ),
             datetime.datetime(2020, 9, 8, 9, 0, tzinfo=_UTC),
         )
-
