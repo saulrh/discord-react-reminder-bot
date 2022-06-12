@@ -16,10 +16,12 @@ redis = "~4.1"
 idna = {url = "https://files.pythonhosted.org/packages/62/08/e3fc7c8161090f742f504f40b1bccbfc544d4a4e09eb774bf40aafce5436/idna-3.3.tar.gz"}
 six = {url = "https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"}
 
+[tool.poetry.dev-dependencies]
+poethepoet = "^0.13.1"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
-hot-reload = "jurigged react_reminder/app.py"
 test = "python -m unittest discover -p '*_test.py'"
