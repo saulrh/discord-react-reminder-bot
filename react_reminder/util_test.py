@@ -76,3 +76,24 @@ class NextDatetimeTest(unittest.TestCase):
             ),
             datetime.datetime(2010, 2, 2, 21, 0, tzinfo=_UTC),
         )
+
+    def test_across_eoy(self):
+        self.assertEqual(
+            util.next_datetime(
+                now=datetime.datetime(2010, 12, 31, 22, 0, tzinfo=_UTC),
+                then=datetime.time(hour=9, minute=0),
+                then_timezone=_UTC,
+            ),
+            datetime.datetime(2011, 1, 1, 9, 0, tzinfo=_UTC),
+        )
+
+    def test_across_dst(self):
+        self.assertEqual(
+            util.next_datetime(
+                now=datetime.datetime(2020, 9, 7, 22, 0, tzinfo=_LA),
+                then=datetime.time(hour=9, minute=0),
+                then_timezone=_UTC,
+            ),
+            datetime.datetime(2020, 9, 8, 9, 0, tzinfo=_UTC),
+        )
+
