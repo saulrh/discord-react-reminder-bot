@@ -1,4 +1,4 @@
-from absl.testing import absltest
+import unittest
 import datetime
 import zoneinfo
 
@@ -8,13 +8,13 @@ _UTC = datetime.timezone.utc
 _LA = zoneinfo.ZoneInfo("America/Los_Angeles")
 
 
-class NextDatetimeTest(absltest.TestCase):
+class NextDatetimeTest(unittest.TestCase):
     def test_in_utc(self):
         self.assertEqual(
             util.next_datetime(
                 now=datetime.datetime(2010, 2, 2, 4, 30, tzinfo=_UTC),
                 then=datetime.time(hour=15, minute=0),
-                then_timezone=datetime.timezone.utc,
+                then_timezone=_UTC,
             ),
             datetime.datetime(2010, 2, 2, 15, 0, tzinfo=_UTC),
         )
@@ -32,7 +32,7 @@ class NextDatetimeTest(absltest.TestCase):
     def test_wrapping(self):
         self.assertEqual(
             util.next_datetime(
-                now=datetime.datetime(2010, 2, 2, 14, 30, tzinfo=_UTC),
+                now=datetime.datetime(2010, 2, 2, 18, 30, tzinfo=_UTC),
                 then=datetime.time(hour=5, minute=0),
                 then_timezone=_UTC,
             ),
@@ -67,6 +67,12 @@ class NextDatetimeTest(absltest.TestCase):
             datetime.datetime(2010, 2, 3, 1, 0, tzinfo=_LA),
         )
 
-
-if __name__ == "__main__":
-    absltest.main()
+    def test_pm(self):
+        self.assertEqual(
+            util.next_datetime(
+                now=datetime.datetime(2010, 2, 2, 14, 0, tzinfo=_UTC),
+                then=datetime.time(hour=9, minute=0),
+                then_timezone=_UTC,
+            ),
+            datetime.datetime(2010, 2, 2, 21, 0, tzinfo=_UTC),
+        )
